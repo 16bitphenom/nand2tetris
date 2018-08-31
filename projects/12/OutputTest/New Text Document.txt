@@ -1,0 +1,34 @@
+var Array map;
+    	var int addr, data, j;
+
+    	let map = Output.getMap(c);
+    	let addr = (352 * line) + (col / 2);
+    	let j = 0;
+
+    	while (j < 11){
+
+    		let data = map[j];
+    		if ((col & 1) = 0){
+
+    			let data = (data * 256);
+    			let screen[addr] = screen[addr] & 255;
+    			let screen[addr] = screen[addr] | data;
+    		}
+    		else{
+
+				let data = (255 * 256) | data;
+				let screen[addr] = screen[addr] | 255;
+				let screen[addr] = screen[addr] & data;
+    		}
+
+    		let addr = addr + 32;
+    		let j = j + 1;
+    	}
+
+    	if (col = 63){
+    		do Output.println();
+    	}
+    	else{
+    		do Output.moveCursor(line, (col + 1));
+    	}
+    	return;

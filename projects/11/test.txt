@@ -1,0 +1,55 @@
+EDF768, Bill Meyer, 2456, Vet_Parking
+TY5678, Jane Miller, 8987, AgHort_Parking
+GEF123, Jill Black, 3456, Creche_Parking
+ABC234, Fred Greenside, 2345, AgHort_Parking
+GH7682, Clara Hill, 7689, AgHort_Parking
+JU9807, Jacky Blair, 7867, Vet_Parking
+KLOI98, Martha Miller, 4563, Vet_Parking
+ADF645, Cloe Freckle, 6789, Vet_Parking
+DF7800, Jacko Frizzle, 4532, Creche_Parking
+WER546, Olga Grey, 9898, Creche_Parking
+HUY768, Wilbur Matty, 8912, Creche_Parking
+EDF768, Jenny Meyer, 9987, Vet_Parking
+TY5678, Jo King, 8987, AgHort_Parking
+JU9807, Mike Green, 3212, Vet_Parking
+
+
+def compileIf():
+
+	global symbolTable
+	global vmWriter
+	
+	trueLabel = newLabel('IF_TRUE')
+	elseLabel = newLabel('IF_FALSE')
+	endLabel = newLabel('IF_END')
+
+	s = advance()
+	eat(407, '(', getToken(s))
+	compileExpression()
+	vmWriter.writeArithmetic('not')
+	
+	s = advance()
+	eat(411, ')', getToken(s))
+
+	vmWriter.writeIf(elseLabel)
+
+	s = advance()
+	eat(417, '{', getToken(s))
+	compileStatements()
+	
+	s = advance()
+	eat(420, '}', getToken(s))
+
+	vmWriter.writeGoto(endLabel)
+
+	vmWriter.writeLabel(elseLabel)
+	s = advance()
+	if getToken(s) == 'else':
+		s = advance()
+		eat(429, '{', getToken(s))
+		compileStatements()
+		s = advance()
+		eat(432, '}', getToken(s))
+	else:
+		retrace()
+	vmWriter.writeLabel(endLabel)

@@ -1,0 +1,43 @@
+class Main{
+	
+	static int numMoves;
+	function void main(){
+
+		var int numDisks;
+		let numMoves = 0;
+		
+		let numDisks = Keyboard.readInt("Enter the number of disks:");
+		do Main.towerOfHanoi(numDisks, 65, 67, 66);
+		do Output.printString("Total number of moves = ");
+		do Output.printInt(numMoves);
+		do Output.println();
+		return;
+
+	}
+
+	function void towerOfHanoi(int n, char from_rod, char to_rod, char aux_rod){
+
+		let numMoves = numMoves + 1;
+
+		if (n = 1){
+
+			do Output.printString("Move disk 1 from rod ");
+			do Output.printChar(from_rod);
+			do Output.printString(" to rod ");
+			do Output.printChar(to_rod);
+			do Output.println();
+			return;
+		}
+
+		do Main.towerOfHanoi((n - 1), from_rod, aux_rod, to_rod);
+		do Output.printString("Move disk ");
+		do Output.printInt(n);
+		do Output.printString(" from rod ");
+		do Output.printChar(from_rod);
+		do Output.printString(" to rod ");
+		do Output.printChar(to_rod);
+		do Output.println();
+		do Main.towerOfHanoi((n - 1), aux_rod, to_rod, from_rod);
+		return;
+	}
+}
